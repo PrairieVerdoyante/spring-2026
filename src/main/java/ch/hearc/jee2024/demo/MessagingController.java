@@ -14,8 +14,12 @@ import java.util.logging.Logger;
 public class MessagingController {
     private static final Logger LOGGER = Logger.getLogger(MessagingController.class.getName());
 
-    @Autowired
     private MessagingService messagingService;
+
+    @Autowired
+    public void setMessagingService(MessagingService messagingService) {
+        this.messagingService = messagingService;
+    }
 
     @GetMapping
     public String send(){
@@ -25,4 +29,6 @@ public class MessagingController {
 
         return result;
     }
+
+
 }
