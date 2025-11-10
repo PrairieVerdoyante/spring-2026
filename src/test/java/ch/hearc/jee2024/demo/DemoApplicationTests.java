@@ -28,6 +28,8 @@ class DemoApplicationTests {
                 .andExpect(content().string("Hello World!")); //Body = "Hello World!"
     }
 
+
+
     @Test
     public void newControllerExist() throws Exception {
         String controlleurExpectedFqdn = "ch.hearc.jee2024.demo.MessagingController";
@@ -58,6 +60,36 @@ class DemoApplicationTests {
         this.mvc.perform(get("/send/sms"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("SMS message successfully send!"));
+    }
+
+    @Test
+    public void callSendWithParamMusstSendWithChoosenType() throws Exception {
+
+        //Dans un premier temps on va tester le message du retour du service de mail
+        this.mvc.perform(get("/send")
+                        .param("type","sms"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("SMS message successfully send!"));
+
+        this.mvc.perform(get("/send")
+                        .param("type","mail"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Mail message successfully send!"));
+    }
+
+    @Test
+    public void callSendWithHeaderMusstSendWithChoosenType() throws Exception {
+
+    //Dans un premier temps on va tester le message du retour du service de mail
+        this.mvc.perform(get("/send")
+                        .header("type","sms"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("SMS message successfully send!"));
+
+        this.mvc.perform(get("/send")
+                        .header("type","mail"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Mail message successfully send!"));
     }
 
 
